@@ -165,7 +165,7 @@ vim /etc/gitlab/gitlab.rb
 sudo gitlab-ctl reconfigure
 ```
 
-到此为止，你在CentOS中的浏览器输入http://localhost或者ip及端口号，便可以看到gitlab的页面了。
+到此为止，你在CentOS中的浏览器输入 http://localhost 或者 ip及端口号，便可以看到gitlab的页面了。
 
 
 
