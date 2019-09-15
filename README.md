@@ -177,7 +177,7 @@ sudo gitlab-ctl reconfigure
 
 关于桥接模式和NAT模式的区别，可参考[这篇文章](https://blog.csdn.net/ning521513/article/details/78441392)。
 
-### (一) 设置静态IP
+### (一) NAT模式下设置静态IP
 
 在CentOS 7中，通过以下命令编辑IP：
 
@@ -237,8 +237,14 @@ service network restart
    解决办法：可能需要开放windows端口，[参考这里](https://www.cnblogs.com/zhurong/p/9398602.html)。
 
 4. gitlab中的时区不对
+解决办法：[参考这里](https://www.cnblogs.com/linkenpark/p/8423358.html)。
+   
+5. 如何汉化？
+   解决办法：[参考这里](https://gitlab.com/xhang/gitlab/wikis/home)。
 
-   解决办法：[参考这里](https://www.cnblogs.com/linkenpark/p/8423358.html)。
+   
+
+   
 
    
 
