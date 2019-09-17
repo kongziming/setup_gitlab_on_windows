@@ -2,11 +2,11 @@
 
 ## 痛点
 
-在搭建gitlab之前，你是否想过或遇到过以下几个问题：为什么会选择git而不用svn？应该选择哪种适合自己或团队的git服务器？想要搭建gitlab是否因各种难题甚至想要放弃？
+在搭建gitlab之前，请先思考以下几个问题：为什么会选择git而不用svn？应该选择哪种适合自己或团队的git服务器？想要搭建gitlab是否因各种难题甚至想要放弃？
 
 [不同git服务器对比](https://www.slant.co/topics/1440/~best-self-hosted-web-based-git-repository-managers)
 
-有时候我们不想把代码托管在外网上，所以需要在内网中搭建一个git服务器，该如何选择呢？
+有时候我们不想把代码托管在外网上，想在内网搭建一个git服务器，该如何选择呢？
 
 可能大家会从团队人数、硬件等方面考虑，我选择gitlab的原因是它有非常美观的web界面，而且功能很强大。但是搭建起来有点麻烦，尤其是在windows上。
 
@@ -42,25 +42,42 @@
 
 ## 步骤一：在VMware上安装CentOS
 
-打开VMware，新建虚拟机 - 典型 - 安装程序光盘映像文件
+1. 打开VMware，新建虚拟机 - 典型 - 安装程序光盘映像文件
+   ![1](images/1.jpg)
 
-选择CentOS系统文件
+2. 选择CentOS系统文件
+   ![2](images/2.jpg)
 
-自定义硬件
+3. 自定义硬件
 
-增加内存到2G
+   增加内存到2G
 
-调整处理器数目
+   调整处理器数目
 
-网络连接可选择桥接模式，也可以选择NAT模式。在后面需进行配置。
+   网络连接可选择桥接模式，也可以选择NAT模式。在后面需进行配置
 
-其它不变
+   删除声卡选项
 
-完成
+   其它不变
 
-开始安装
+   ![3](images/3.jpg)
 
+4. 开始安装
+   ![4](images/4.jpg)
 
+5. 软件选择中，选择带GUI的服务器，这样在安装完成后会带一个界面，方便后面操作。
+   ![5](images/5.jpg)
+
+6. 设置ROOT密码，创建用户
+   ![6](images/6.jpg)
+
+7. 完成安装，重启
+
+   ![7](images/7.jpg)
+
+   至此，CentOS便安装成功了。
+
+   
 
 ## 步骤二：在CentOS中安装gitlab
 
@@ -177,7 +194,7 @@ sudo gitlab-ctl reconfigure
 
 关于桥接模式和NAT模式的区别，可参考[这篇文章](https://blog.csdn.net/ning521513/article/details/78441392)。
 
-### (一) NAT模式下设置静态IP
+### (一) 设置静态IP
 
 在CentOS 7中，通过以下命令编辑IP：
 
@@ -244,9 +261,6 @@ service network restart
 
    
 
-   
-
-   
 
 ## 参考文章
 
