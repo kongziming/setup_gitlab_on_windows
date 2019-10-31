@@ -248,7 +248,7 @@ service network restart
    解决办法：关闭Hyper-V，[参考这里](https://blog.csdn.net/p942005405/article/details/89674440)。
 
 2. yum被其它进程占用，无法安装。
-   解决办法：将该进行杀掉。
+   解决办法：将该进程杀掉。
 
 3. 局域网内其它电脑无法访问。
    解决办法：可能需要开放windows端口，[参考这里](https://www.cnblogs.com/zhurong/p/9398602.html)。
