@@ -1,40 +1,40 @@
-# 通过windows搭建gitlab
+# 通过 Windows 搭建 Gitlab
 
 ## 痛点
 
-在搭建gitlab之前，请先思考以下几个问题：为什么会选择git而不用svn？应该选择哪种适合自己或团队的git服务器？想要搭建gitlab是否因各种难题甚至想要放弃？
+在搭建 Gitlab 之前，请先思考以下几个问题：为什么会选择 git 而不用 svn？应该选择哪种适合自己或团队的 git 服务器？想要搭建 Gitlab 是否因各种难题甚至想要放弃？
 
 [不同git服务器对比](https://www.slant.co/topics/1440/~best-self-hosted-web-based-git-repository-managers)
 
-有时候我们不想把代码托管在外网上，想在内网搭建一个git服务器，该如何选择呢？
+有时候我们不想把代码托管在外网上，想在内网搭建一个 git 服务器，该如何选择呢？
 
-可能大家会从团队人数、硬件等方面考虑，我选择gitlab的原因是它有非常美观的web界面，而且功能很强大。但是搭建起来有点麻烦，尤其是在windows上。
+可能大家会从团队人数、硬件等方面考虑，我选择 Gitlab 的原因是它有非常美观的 web 界面，而且功能很强大。但是搭建起来有点麻烦，尤其是在 Windows 上。
 
 
 
-## 在windows中搭建gitlab
+## 在 Windows 中搭建 Gitlab
 
-在windows中搭建gitlab可能并非一件易事。
+在 Windows 中搭建 Gitlab 可能并非一件易事。
 
 ### (一) 使用Docker
 
 第一种方法是通过`docker`，首先安装[docker for windows](https://hub.docker.com/editions/community/docker-ce-desktop-windows)，接下来在docker中搭建gitlab，[参考这里](https://docs.gitlab.com/omnibus/docker/)。
 
-在网上有很多教程，比如这篇：[win10企业版在docker上部署gitlab](https://blog.csdn.net/MonoBehaviour/article/details/84852984)，按照教程一步一步确实是可以运行gitlab并且可访问的。
+在网上有很多教程，比如这篇：[win10企业版在docker上部署gitlab](https://blog.csdn.net/MonoBehaviour/article/details/84852984)，按照教程一步一步确实是可以运行 Gitlab 并且可访问的。
 
-然而，这种方式是存在风险的。gitlab官方[文档](https://docs.gitlab.com/omnibus/docker/)中并不推荐，主要因为存储权限和其它一些未知问题，最严重的是它不支持持久化存储，当你的服务器重启之后，gitlab中的所有数据都会丢失。而且我没有找到好的解决办法。
+然而，这种方式是存在风险的。Gitlab官方[文档](https://docs.gitlab.com/omnibus/docker/)中并不推荐，主要因为存储权限和其它一些未知问题，最严重的是它不支持持久化存储，当你的服务器重启之后，Gitlab 中的所有数据都会丢失。而且我没有找到好的解决办法。
 
 所以，这种方法目前是**不可取**的。
 
 ### (二) 使用虚拟机
 
-第二种方法是通过在虚拟机中运行一个linux系统来搭建gitlab，我使用的是[VMware](https://my.vmware.com/cn/web/vmware/info/slug/desktop_end_user_computing/vmware_workstation_pro/15_0) + [CentOS](https://www.centos.org/download/)。
+第二种方法是通过在虚拟机中运行一个 Linux 系统来搭建 Gitlab，我使用的是 [VMware](https://my.vmware.com/cn/web/vmware/info/slug/desktop_end_user_computing/vmware_workstation_pro/15_0) + [CentOS](https://www.centos.org/download/)。
 
 该方法主要分为3步：
 
-1. 在VMware中安装CentOS系统
-2. 在CentOS中安装gitlab
-3. 网络配置，使得局域网内可访问gitlab
+1. 在 VMware 中安装 CentOS 系统
+2. 在 CentOS 中安装 Gitlab
+3. 网络配置，使得局域网内可访问 Gitlab
 
 下面将对这3个步骤作详细介绍——
 
@@ -62,7 +62,7 @@
 
    ![3](images/3.jpg)
 
-4. 开始安装
+4. 准备安装
    ![4](images/4.jpg)
 
 5. 软件选择中，选择带GUI的服务器，这样在安装完成后会带一个界面，方便后面操作。
@@ -79,17 +79,19 @@
 
    
 
-## 步骤二：在CentOS中安装gitlab
+## 步骤二：在 CentOS 中安装 Gitlab
 
-在CentOS等Linux系统中安装gitlab，可参考[官方教程](https://about.gitlab.com/install/#centos-7)。下面是一些详细说明：
+在 CentOS 等 Linux 系统中安装 Gitlab，可参考[官方教程](https://about.gitlab.com/install/#centos-7)。下面是一些详细说明：
 
 ### (一) SSH
 
-安装ssh
+安装 ssh
 
 ```shell
 sudo yum install -y curl policycoreutils-python openssh-server
 ```
+
+需要注意的是`policycoreutils-python`在 CentOS 8 中变成了`python3-policycoreutils`，所以目前在 CentOS 8 中是无法直接安装 Gitlab 的。
 
 将ssh服务设为开机自启动
 
@@ -117,7 +119,7 @@ yum install firewalld systemd -y
 service firewalld start
 ```
 
-将http和https添加到防火墙，permanent表示永久生效
+将 http 和 https 添加到防火墙，permanent 表示永久生效
 
 ```shell
 sudo firewall-cmd --permanent --add-service=http
@@ -132,7 +134,7 @@ sudo systemctl reload firewalld
 
 ### (三) Postfix
 
-接下来，安装Postfix用来发送通知邮件。如果你想使用其它方法来发送邮件，可以跳过这个步骤，并在Gitlab安装完成后配置SMTP服务。
+接下来，安装 Postfix 用来发送通知邮件。如果你想使用其它方法来发送邮件，可以跳过这个步骤，并在 Gitlab 安装完成后配置 SMTP 服务。
 
 以下分别是安装、设为自启动以及开启。
 
@@ -144,25 +146,27 @@ sudo systemctl start postfix
 
 ### (四) 安装gitlab
 
-在这里，我们需要通过wget来下载gitlab安装包，如果wget没有安装，则可通过下面的命令安装：
+在这里，我们需要通过 wget 来下载 Gitlab安装包，如果 wget 没有安装，则可通过下面的命令安装：
 
 ```shell
 yum -y install wget
 ```
 
-此外，你可能还需要安装vim，因为后面需要修改gitlab的配置文件：
+此外，你可能还需要安装 vim，因为后面需要修改 Gitlab的配置文件：
 
 ```
 yum install vim -y
 ```
 
-接下来是下载gitlab安装包，为了保证下载速度，可以从[清华大学开源软件镜像站](https://mirrors.tuna.tsinghua.edu.cn/)下载
+接下来是下载 Gitlab 安装包，到[官网](https://packages.gitlab.com/gitlab/gitlab-ce)可以下载最新的安装包。
+
+为了保证下载速度，可以从[清华大学开源软件镜像站](https://mirrors.tuna.tsinghua.edu.cn/)下载，但不是最新的。
 
 ```shell
 wget https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/gitlab-ce-11.11.8-ce.0.el7.x86_64.rpm
 ```
 
-安装gitlab
+安装 Gitlab
 
 ```shell
 rpm -i gitlab-ce-11.11.8-ce.0.el7.x86_64.rpm
@@ -170,7 +174,7 @@ rpm -i gitlab-ce-11.11.8-ce.0.el7.x86_64.rpm
 
 ### (五) 修改配置
 
-等待gitlab安装完成后，终端界面会提示你修改`/etc/gitlab/gitlab.rb`文件，通过设置`external_url`l来配置你的URL，通常情况下是你的服务器ip和端口号。
+等待 Gitlab安装完成后，终端界面会提示你修改 `/etc/gitlab/gitlab.rb` 文件，通过设置 `external_url` l来配置你的 URL，通常情况下是你的服务器 ip 和端口号。
 
 ```shell
 vim /etc/gitlab/gitlab.rb
@@ -182,21 +186,21 @@ vim /etc/gitlab/gitlab.rb
 sudo gitlab-ctl reconfigure
 ```
 
-到此为止，你在CentOS中的浏览器输入 http://localhost 或者 ip及端口号，便可以看到gitlab的页面了。
+到此为止，你在 CentOS 中的浏览器输入 http://localhost 或者 ip及端口号，便可以看到 Gitlab 的页面了。
 
 
 
 ## 步骤三：配置网络，使得局域网内可访问
 
-如果你的VMware虚拟机网络适配器选择的是“桥接模式”，那么只需在CentOS中设置一个静态IP，以后局域网内便可通过该IP访问gitlab。(也许可以不用设置静态ip，我没有试过虚拟机每次重启，ip会不会变化)。
+如果你的 VMware 虚拟机网络适配器选择的是“桥接模式”，那么只需在 CentOS 中设置一个静态 IP，以后局域网内便可通过该 IP 访问 Gitlab。(也许可以不用设置静态ip，我没有试过虚拟机每次重启，ip 会不会变化)。
 
-如果你的VMware虚拟机网络适配器选择的是“NAT模式”，那么需要配置网络端口转发，即将主机的端口与虚拟机的端口关联起来，今后访问主机IP便可间接访问到虚拟机中的gitlab。
+如果你的 VMware 虚拟机网络适配器选择的是“NAT模式”，那么需要配置网络端口转发，即将主机的端口与虚拟机的端口关联起来，今后访问主机 IP 便可间接访问到虚拟机中的 Gitlab。
 
-关于桥接模式和NAT模式的区别，可参考[这篇文章](https://blog.csdn.net/ning521513/article/details/78441392)。
+关于桥接模式和 NAT 模式的区别，可参考[这篇文章](https://blog.csdn.net/ning521513/article/details/78441392)。
 
 ### (一) 设置静态IP
 
-在CentOS 7中，通过以下命令编辑IP：
+在 CentOS 7 中，通过以下命令编辑IP：
 
 ```shell
 vim /etc/sysconfig/network-scripts/ifcfg-ens33
@@ -226,7 +230,7 @@ ONBOOT=yes
 ZONE=public
 ```
 
-注意：在NAT模式下，这里设置的静态IP网关不要与主机的网关相同。
+注意：在 NAT 模式下，这里设置的静态 IP 网关不要与主机的网关相同。
 
 最后，重启网络使刚才配置的IP生效
 
@@ -236,7 +240,7 @@ service network restart
 
 ### (二) 配置NAT模式网络端口转发
 
-打开VMware菜单，编辑 - 虚拟网络编辑器 - NAT设置。
+打开 VMware 菜单，编辑 - 虚拟网络编辑器 - NAT 设置。
 
 
 
@@ -244,16 +248,16 @@ service network restart
 
 最后，总结一下安装过程中的常见问题和解决办法
 
-1. 虚拟机无法开启，提示VMware Workstation 15 与 Device/Credential Guard 不兼容。
-   解决办法：关闭Hyper-V，[参考这里](https://blog.csdn.net/p942005405/article/details/89674440)。
+1. 虚拟机无法开启，提示 VMware Workstation 15 与 Device/Credential Guard 不兼容。
+   解决办法：关闭 Hyper-V，[参考这里](https://blog.csdn.net/p942005405/article/details/89674440)。
 
-2. yum被其它进程占用，无法安装。
+2. yum 被其它进程占用，无法安装。
    解决办法：将该进程杀掉。
 
 3. 局域网内其它电脑无法访问。
-   解决办法：可能需要开放windows端口，[参考这里](https://www.cnblogs.com/zhurong/p/9398602.html)。
+   解决办法：可能需要开放 Windows 端口，[参考这里](https://www.cnblogs.com/zhurong/p/9398602.html)。
 
-4. gitlab中的时区不对
+4. Gitlab 中的时区不对
 解决办法：[参考这里](https://www.cnblogs.com/linkenpark/p/8423358.html)。
    
 5. 如何汉化？
@@ -266,8 +270,8 @@ service network restart
 
 在写这篇教程时，参考了如下的一些文章：
 
-1. [VMware安装CentOS+gitlab](https://www.cnblogs.com/zhouyun-yx/p/10444451.html)
-2. [CentOS7设置静态ip](https://blog.csdn.net/sjhuangx/article/details/79618865)
+1. [VMware 安装 CentOS + gitlab](https://www.cnblogs.com/zhouyun-yx/p/10444451.html)
+2. [CentOS 7 设置静态 ip](https://blog.csdn.net/sjhuangx/article/details/79618865)
 
 
 
